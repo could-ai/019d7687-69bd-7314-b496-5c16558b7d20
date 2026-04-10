@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/chat_message.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import '../integrations/supabase.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -79,8 +81,26 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat App'),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Chat App'),
+            if (SupabaseConfig.client.auth.currentUser != null)
+              Text(
+                SupabaseConfig.client.auth.currentUser!.email ?? 'Unknown User',
+                style: const TextStyle(fontSize: 12),
+              ),
+          ],
+        ),
         elevation: 4.0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              await SupabaseConfig.client.auth.signOut();
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
