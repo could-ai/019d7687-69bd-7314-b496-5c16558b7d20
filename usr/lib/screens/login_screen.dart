@@ -84,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'Email'),
               keyboardType: TextInputType.emailAddress,
-              autocapitalize: TextCapitalize.none,
+              textCapitalization: TextCapitalization.none,
             ),
             const SizedBox(height: 16),
             TextField(
